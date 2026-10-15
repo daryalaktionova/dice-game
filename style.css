@@ -1,0 +1,526 @@
+
+:root {
+    --cream: #efe3c6;
+    --cream-soft: #cfc3a4;
+    --gold: #f1d17f;
+    --fail: #ff8d86;
+    --ink: #04070a;
+    --below-dice-offset: 38px;
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #101713;
+    color: #f4e8ca;
+    font-family: "Cormorant", Georgia, "Times New Roman", serif;
+    font-weight: 400;
+}
+
+.game {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    min-height: 100vh;
+    margin: 0 auto;
+    overflow: hidden;
+    isolation: isolate;
+    container-type: inline-size;
+    background: #26372c;
+    text-align: center;
+}
+
+.background,
+.arch {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.background {
+    z-index: -2;
+    object-fit: cover;
+}
+
+.arch {
+    z-index: -1;
+    object-fit: fill;
+}
+
+/* Основной контент */
+
+.content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    padding: 38px 20px 32px;
+}
+
+/* Заголовок */
+
+h1 {
+    position: relative;
+    top: 19px;
+    width: 100%;
+    max-width: 360px;
+    margin: 12px 0 0;
+    font-family: "Cormorant", Georgia, "Times New Roman", serif;
+    font-size: clamp(25px, 7vw, 34px);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    overflow-wrap: break-word;
+    text-shadow: 0 2px 8px #000;
+}
+
+/* Пространство для трёхмерного кубика */
+
+.dice-space {
+    position: relative;
+    flex: 1 0 auto;
+    width: 100%;
+    min-width: 0;
+    min-height: 280px;
+    margin: 0;
+}
+
+.dice-space canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    outline: none;
+}
+
+/* Результат броска */
+
+#result {
+    position: relative;
+    top: calc(-1 * var(--below-dice-offset));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 92px;
+    margin: 0 0 14px;
+    padding: 4px;
+    gap: 2px;
+    font-family: "Cormorant", Georgia, "Times New Roman", serif;
+    font-size: clamp(17px, 4.5vw, 22px);
+    font-weight: 500;
+    line-height: 1.3;
+    text-align: center;
+    text-shadow: 0 2px 8px #000;
+    overflow-wrap: anywhere;
+    white-space: normal;
+}
+
+#result .number {
+    display: block;
+    order: 1;
+    max-width: 100%;
+    margin: 0;
+    font-size: 50px;
+    font-weight: 600;
+    line-height: 1;
+    color: #f7efdc;
+}
+
+#result .critical {
+    display: block;
+    order: 0;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0;
+    font-size: clamp(15px, 4vw, 20px);
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--gold);
+    text-align: center;
+    overflow-wrap: anywhere;
+    white-space: normal;
+}
+
+#result .critical.win {
+    color: var(--gold);
+}
+
+#result .critical.fail {
+    color: var(--fail);
+}
+
+/* Общие кнопки */
+
+button {
+    max-width: 100%;
+    border: 1px solid #c8a96b;
+    border-radius: 5px;
+    padding: 16px 34px;
+    background: linear-gradient(#745735, #35291d);
+    color: #fff0cd;
+    font-family: "Cormorant", Georgia, "Times New Roman", serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    box-shadow: 0 4px 18px #0008;
+}
+
+button:disabled {
+    cursor: wait;
+    opacity: 0.6;
+}
+
+/* Кнопка «Бросить» */
+
+#roll {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    top: calc(-1 * var(--below-dice-offset));
+    flex: 0 0 auto;
+    margin: 0;
+    min-width: 42cqw;
+    padding: 17px 48px;
+    border: 1px solid #bda064;
+    border-radius: 2px;
+    background:
+        linear-gradient(
+            115deg,
+            transparent 0%,
+            #e8c8780a 30%,
+            #e8c87820 50%,
+            #e8c87806 70%,
+            transparent 100%
+        ),
+        linear-gradient(
+            180deg,
+            #49302b 0%,
+            #291c1b 45%,
+            #1b1716 100%
+        );
+    color: #f4dfad;
+    font: 600 5cqw / 1 "Cormorant", Georgia, "Times New Roman", serif;
+    font-variant-caps: small-caps;
+    letter-spacing: 0.1em;
+    text-shadow:
+        0 1px 2px #000,
+        0 0 10px #e3bd6530;
+    cursor: pointer;
+    box-shadow:
+        0 5px 16px #0009,
+        inset 0 1px 0 #fff2,
+        inset 0 -2px 0 #0008,
+        inset 0 0 0 3px #8b6a3925;
+    clip-path: polygon(
+        0 12%,
+        4% 12%,
+        4% 0,
+        96% 0,
+        96% 12%,
+        100% 12%,
+        100% 88%,
+        96% 88%,
+        96% 100%,
+        4% 100%,
+        4% 88%,
+        0 88%
+    );
+    transition:
+        color 0.25s ease,
+        filter 0.25s ease,
+        box-shadow 0.25s ease,
+        opacity 0.2s ease,
+        transform 0.15s ease;
+}
+
+/* Внутренняя гравированная окантовка */
+
+#roll::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 5px 7px;
+    border: 1px solid #b9985b80;
+    pointer-events: none;
+    background: linear-gradient(
+        90deg,
+        #c5a15b0b,
+        transparent 20%,
+        transparent 80%,
+        #c5a15b0b
+    );
+}
+
+/* Левая декоративная звезда */
+
+#roll::after {
+    content: "✦";
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 8px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #c9a45e;
+    font-family: Georgia, serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0;
+    text-shadow: none;
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: none;
+}
+
+/* Правая декоративная звезда */
+
+#roll {
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext x='12' y='17' text-anchor='middle' font-family='Georgia' font-size='16' fill='%23c9a45e'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E"),
+        linear-gradient(
+            115deg,
+            transparent 0%,
+            #e8c8780a 30%,
+            #e8c87820 50%,
+            #e8c87806 70%,
+            transparent 100%
+        ),
+        linear-gradient(
+            180deg,
+            #49302b 0%,
+            #291c1b 45%,
+            #1b1716 100%
+        );
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: right 8px center, center, center;
+    background-size: 24px 24px, 100% 100%, 100% 100%;
+}
+
+/* Наведение */
+
+#roll:hover:not(:disabled) {
+    color: #fff0c4;
+    filter: brightness(1.16);
+    box-shadow:
+        0 0 20px #d4a84a25,
+        0 5px 16px #0009,
+        inset 0 1px 0 #fff3,
+        inset 0 -2px 0 #0008,
+        inset 0 0 0 3px #c49b5035;
+}
+
+#roll:hover:not(:disabled)::after {
+    color: #c9a45e;
+    text-shadow: none;
+}
+
+#roll:active:not(:disabled) {
+    filter: brightness(0.9);
+    box-shadow:
+        0 2px 8px #0009,
+        inset 0 2px 5px #0008;
+    transform: scale(0.97);
+}
+
+#roll:disabled {
+    cursor: wait;
+    opacity: 0.6;
+    filter: saturate(0.5);
+}
+
+/* Переключатели музыки и звуковых эффектов */
+
+.audio-controls {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sound-toggle {
+    position: static;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+    padding: 8px;
+    border: 0;
+    border-radius: 50%;
+    background: #0005;
+    box-shadow: none;
+    color: var(--cream);
+    font-size: 23px;
+    letter-spacing: 0;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sound-toggle:hover {
+    background: #0008;
+    color: var(--gold);
+}
+
+.sound-toggle svg {
+    display: block;
+    width: 26px;
+    height: 26px;
+    flex: 0 0 auto;
+}
+
+/* Выбор скина */
+
+.skin-picker {
+    position: relative;
+    top: calc(-1 * var(--below-dice-offset) + 24px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 auto;
+    gap: 20px;
+    width: 100%;
+    min-width: 0;
+    margin: 18px 0 0;
+}
+
+.skin-option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 64px;
+    width: 64px;
+    height: 64px;
+    padding: 4px;
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    box-shadow: none;
+    letter-spacing: 0;
+    transition: background 0.2s;
+}
+
+.skin-preview {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    filter: drop-shadow(0 0 5px #d6ad6030);
+    transition: filter 0.2s, transform 0.2s;
+}
+
+.skin-option:hover .skin-preview {
+    filter: drop-shadow(0 0 7px #f1d17f80);
+    transform: scale(1.06);
+}
+
+.skin-option.active {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.skin-option.active .skin-preview {
+    filter: drop-shadow(0 0 8px #f1d17f90);
+    transform: none;
+}
+
+.skin-option:active {
+    transform: scale(0.97);
+}
+
+/* Фокус клавиатуры */
+
+#roll:focus-visible,
+.skin-option:focus-visible,
+.sound-toggle:focus-visible {
+    outline: 1px solid var(--cream);
+    outline-offset: 4px;
+}
+
+/* Узкие экраны */
+
+@media (max-width: 360px) {
+    .content {
+        padding-right: 14px;
+        padding-left: 14px;
+    }
+
+    h1 {
+        font-size: clamp(24px, 7vw, 30px);
+    }
+
+    #result .number {
+        font-size: 50px;
+    }
+
+    #result .critical {
+        font-size: 15px;
+        letter-spacing: 0;
+    }
+
+    .skin-picker {
+        gap: 14px;
+    }
+
+    .skin-option {
+        flex-basis: 58px;
+        width: 58px;
+        height: 58px;
+    }
+
+    #roll {
+        padding: 14px 38px;
+        font-size: 7cqw;
+        background-position: right 6px center, center, center;
+        background-size: 20px 20px, 100% 100%, 100% 100%;
+    }
+
+    #roll::after {
+        left: 6px;
+    }
+
+    .audio-controls {
+        top: 14px;
+        right: 14px;
+        gap: 4px;
+    }
+
+    .sound-toggle {
+        width: 38px;
+        height: 38px;
+        padding: 6px;
+    }
+
+    .sound-toggle svg {
+        width: 24px;
+        height: 24px;
+    }
+}
